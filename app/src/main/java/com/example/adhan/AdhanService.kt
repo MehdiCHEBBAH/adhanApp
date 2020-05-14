@@ -41,6 +41,7 @@ class AdhanService: Service() {
         this.sendBroadcast(i)
         super.onTaskRemoved(rootIntent)
     }
+
     private fun formatTime(time: String): String{
         val timeArray = time.split(":")
         return timeArray[0]+":"+timeArray[1]
@@ -55,7 +56,7 @@ class AdhanService: Service() {
         var timeNow : String
         val context = this
 
-        fixedRateTimer("timer",false,0,1000*5){
+        fixedRateTimer("timer",false,0,1000*60){
             timeNow = sdf.format(Date())
             Log.i("", timeNow)
 

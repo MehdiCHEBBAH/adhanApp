@@ -59,13 +59,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        date_text.text = "التاريخ -->" + today.day + " / " + today.month + " / " + today.year
-        fajr_text.text = ("الفجر -->" + prayerTimes.fajr())
-        sunrise_text.text = ("الشروق -->" + prayerTimes.shuruq())
-        dohr_text.text = ("الظهر -->" + prayerTimes.thuhr())
-        asr_text.text = ("العصر -->" + prayerTimes.assr())
-        maghrib_text.text = ("المغرب -->" + prayerTimes.maghrib())
-        isha_text.text = "العشاء -->" + prayerTimes.ishaa()
+        date_text.text = "" + today.day + " / " + today.month + " / " + today.year
+        fajr_text.text = formatTime(prayerTimes.fajr().toString())
+        sunrise_text.text = formatTime(prayerTimes.shuruq().toString())
+        dohr_text.text = formatTime(prayerTimes.thuhr().toString())
+        asr_text.text = formatTime(prayerTimes.assr().toString())
+        maghrib_text.text = formatTime(prayerTimes.maghrib().toString())
+        isha_text.text = formatTime(prayerTimes.ishaa().toString())
 
 
         /********* Create notification channel ************/
@@ -85,12 +85,12 @@ class MainActivity : AppCompatActivity() {
         /******************* Creating the service ******************/
         val intent = Intent(this, AdhanService::class.java)
         val adhanTimes = AdhanTimes(
-            prayerTimes.fajr().toString(),
-            prayerTimes.shuruq().toString(),
-            prayerTimes.thuhr().toString(),
-            prayerTimes.assr().toString(),
-            prayerTimes.maghrib().toString(),
-            prayerTimes.ishaa().toString()
+            formatTime(prayerTimes.fajr().toString()),
+            formatTime(prayerTimes.shuruq().toString()),
+            formatTime(prayerTimes.thuhr().toString()),
+            formatTime(prayerTimes.assr().toString()),
+            formatTime(prayerTimes.maghrib().toString()),
+            formatTime(prayerTimes.ishaa().toString())
         )
         intent.putExtra("adhanTimes", adhanTimes)
         startService(intent)
@@ -195,4 +195,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun formatTime(time: String): String{
+        val timeArray = time.split(":")
+        return timeArray[0]+":"+timeArray[1]
+    }
 }
